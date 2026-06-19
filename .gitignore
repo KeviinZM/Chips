@@ -1,0 +1,11 @@
+# Deno
+.deno/
+*.db
+*.db-shm
+*.db-wal
+
+# OS / éditeurs
+.DS_Store
+*.log
+.idea/
+.vscode/

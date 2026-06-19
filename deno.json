@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "dev": "deno run --unstable-kv --allow-net --allow-read --allow-env --watch main.ts",
+    "start": "deno run --unstable-kv --allow-net --allow-read --allow-env main.ts"
+  },
+  "deploy": {
+    "entrypoint": "main.ts"
+  }
+}

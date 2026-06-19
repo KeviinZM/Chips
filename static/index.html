@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#1a1410" />
+  <title>La Bataille des Chips</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥔</text></svg>" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <!-- Écran prénom -->
+  <section id="login" class="login hidden">
+    <div class="login-card">
+      <div class="login-emoji">🥔</div>
+      <h1>La Bataille des Chips</h1>
+      <p class="login-sub">Note les chips des autres sur 10. Le meilleur paquet gagne&nbsp;!</p>
+      <form id="login-form" autocomplete="off">
+        <input id="name-input" type="text" placeholder="Ton prénom" maxlength="30" required />
+        <button type="submit" class="btn-primary">C'est parti&nbsp;→</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Application -->
+  <main id="app" class="app hidden">
+    <header class="topbar">
+      <div class="topbar-title">🥔 Chips Battle</div>
+      <button id="who" class="who" title="Changer de prénom"></button>
+    </header>
+
+    <!-- Onglet : Noter -->
+    <section id="tab-rate" class="tab">
+      <h2 class="tab-title">À noter</h2>
+      <p class="tab-hint">Glisse pour donner ta note. Tu vois la moyenne, jamais les notes des autres.</p>
+      <div id="rate-list" class="list"></div>
+    </section>
+
+    <!-- Onglet : Mes chips -->
+    <section id="tab-mine" class="tab hidden">
+      <h2 class="tab-title">Mes chips</h2>
+      <form id="add-form" class="add-form" autocomplete="off">
+        <input id="chip-input" type="text" placeholder="Ex : Lay's Paprika" maxlength="60" required />
+        <button type="submit" class="btn-primary">Ajouter</button>
+      </form>
+      <p class="tab-hint">Ajoute chaque paquet que tu as ramené. Les autres pourront les noter.</p>
+      <div id="mine-list" class="list"></div>
+    </section>
+
+    <!-- Onglet : Classement -->
+    <section id="tab-rank" class="tab hidden">
+      <h2 class="tab-title">Classement</h2>
+      <p class="tab-hint">Moyennes en direct. Les notes détaillées restent cachées jusqu'à la révélation finale.</p>
+      <div id="rank-list" class="list"></div>
+      <div class="reveal-zone">
+        <button id="reveal-btn" class="btn-ghost">🔓 Révéler les notes (organisateur)</button>
+        <button id="hide-btn" class="btn-ghost hidden">🙈 Re-cacher les notes</button>
+        <button id="reset-btn" class="btn-ghost" style="margin-top:8px;color:#ef8a8a">♻️ Tout réinitialiser (organisateur)</button>
+        <p id="reveal-state" class="reveal-state"></p>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav class="nav">
+      <button class="nav-btn active" data-tab="rate">
+        <span class="nav-ico">⭐</span><span>Noter</span>
+      </button>
+      <button class="nav-btn" data-tab="mine">
+        <span class="nav-ico">🧺</span><span>Mes chips</span>
+      </button>
+      <button class="nav-btn" data-tab="rank">
+        <span class="nav-ico">🏆</span><span>Classement</span>
+      </button>
+    </nav>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
