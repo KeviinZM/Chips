@@ -161,7 +161,12 @@ async function handler(req: Request): Promise<Response> {
       const data = await Deno.readFile(
         new URL(`./static/${file[0]}`, import.meta.url),
       );
-      return new Response(data, { headers: { "content-type": file[1] } });
+      return new Response(data, {
+        headers: {
+          "content-type": file[1],
+          "cache-control": "no-store, must-revalidate",
+        },
+      });
     } catch {
       return new Response("Not found", { status: 404 });
     }
