@@ -156,6 +156,18 @@ input[type="text"]:focus { border-color: var(--accent); }
   gap: 12px;
 }
 .card-name { font-size: 17px; font-weight: 700; line-height: 1.25; }
+.mine-tag {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  vertical-align: middle;
+  color: var(--accent);
+  background: rgba(255, 182, 39, 0.12);
+  border: 1px solid rgba(255, 182, 39, 0.3);
+  padding: 1px 7px;
+  border-radius: 999px;
+  margin-left: 4px;
+}
 .card-by { color: var(--muted); font-size: 12.5px; margin-top: 3px; }
 
 .avg {

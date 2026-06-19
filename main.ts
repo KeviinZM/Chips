@@ -122,9 +122,6 @@ async function handler(req: Request): Promise<Response> {
     score = Math.max(0, Math.min(10, Math.round(score * 2) / 2)); // 0..10 par 0.5
     const chip = (await kv.get<Chip>(["chips", chipId])).value;
     if (!chip) return json({ error: "chips introuvable" }, 404);
-    if (chip.broughtBy === voter) {
-      return json({ error: "on ne note pas ses propres chips" }, 403);
-    }
     const rating: Rating = { score, updatedAt: Date.now() };
     await kv.set(["ratings", chipId, voter], rating);
     return json({ ok: true });

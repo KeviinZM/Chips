@@ -114,7 +114,7 @@ function render() {
 // ---- Onglet Noter ----
 function renderRate() {
   const list = $("#rate-list");
-  const toRate = state.chips.filter((c) => !c.mine);
+  const toRate = state.chips;
   if (toRate.length === 0) {
     list.innerHTML = emptyMsg("🍟", "Aucune chips à noter pour l'instant.<br>Reviens quand les copains auront ajouté leurs paquets&nbsp;!");
     return;
@@ -127,7 +127,7 @@ function renderRate() {
     <div class="card" data-id="${c.id}">
       <div class="card-head">
         <div>
-          <div class="card-name">${esc(c.name)}</div>
+          <div class="card-name">${esc(c.name)}${c.mine ? ` <span class="mine-tag">tes chips</span>` : ""}</div>
           <div class="card-by">ramenées par ${esc(c.broughtBy)}</div>
         </div>
         ${avgBadge(c)}
