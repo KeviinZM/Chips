@@ -121,8 +121,6 @@ function renderRate() {
   }
   list.innerHTML = toRate.map((c) => {
     const has = c.myScore != null;
-    const val = has ? c.myScore : 5;
-    const fill = (val / 10) * 100;
     return `
     <div class="card" data-id="${c.id}">
       <div class="card-head">
@@ -133,35 +131,44 @@ function renderRate() {
         ${avgBadge(c)}
       </div>
       <div class="rate-row">
-        <div class="rate-top">
-          <span class="rate-label">Ta note</span>
-          <span class="rate-value ${has ? "" : "unset"}">${has ? c.myScore + " /10" : "pas encore notée"}</span>
+        <span class="rate-label">Ta note</span>
+        <div class="note-box">
+          <input type="number" class="note-input" inputmode="decimal"
+                 min="0" max="10" step="0.5" placeholder="–"
+                 value="${has ? c.myScore : ""}" />
+          <span class="note-max">/10</span>
         </div>
-        <input type="range" min="0" max="10" step="0.5" value="${val}" style="--fill:${fill}%" />
-        <div class="scale"><span>0</span><span>5</span><span>10</span></div>
+        <span class="saved-flag">enregistré ✓</span>
       </div>
     </div>`;
   }).join("");
 
-  // brancher les sliders
+  // brancher les cases de note
   list.querySelectorAll(".card").forEach((card) => {
     const id = card.dataset.id;
-    const range = card.querySelector("input[type=range]");
-    const valEl = card.querySelector(".rate-value");
-    range.addEventListener("input", () => {
-      typing = true;
-      const v = parseFloat(range.value);
-      range.style.setProperty("--fill", (v / 10) * 100 + "%");
-      valEl.textContent = v + " /10";
-      valEl.classList.remove("unset");
-    });
+    const input = card.querySelector(".note-input");
+    const flag = card.querySelector(".saved-flag");
+
+    input.addEventListener("focus", () => { typing = true; });
+
     const commit = () => {
-      const v = parseFloat(range.value);
+      let raw = input.value.replace(",", ".").trim();
+      if (raw === "") { typing = false; return; } // case vide : on ne note pas
+      let v = parseFloat(raw);
+      if (Number.isNaN(v)) { input.value = ""; typing = false; return; }
+      v = Math.max(0, Math.min(10, Math.round(v * 2) / 2)); // 0..10 par pas de 0.5
+      input.value = v;
       saveRating(id, v);
+      flag.classList.add("show");
+      setTimeout(() => flag.classList.remove("show"), 1500);
       setTimeout(() => { typing = false; }, 600);
     };
-    range.addEventListener("change", commit);
-    range.addEventListener("pointerup", commit);
+
+    input.addEventListener("change", commit);
+    input.addEventListener("blur", commit);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); input.blur(); }
+    });
   });
 }
 
