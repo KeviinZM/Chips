@@ -61,12 +61,19 @@ async function api(path, body) {
   return res.json().catch(() => ({}));
 }
 
-async function refresh() {
+let lastSig = "";
+async function refresh(force = false) {
   try {
     const data = await api(`/api/state?name=${encodeURIComponent(me)}`);
     if (data && Array.isArray(data.chips)) {
+      const sig = JSON.stringify(data);
       state = data;
-      render();
+      // Ne redessine que si les données ont réellement changé (évite le
+      // clignotement toutes les 4 s quand rien ne bouge).
+      if (force || sig !== lastSig) {
+        lastSig = sig;
+        render();
+      }
     }
   } catch (_) { /* silencieux */ }
 }
